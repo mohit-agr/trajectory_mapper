@@ -1,0 +1,31 @@
+<launch>
+
+	<arg name="camera" default="0"/>
+<!-- EXTERNAL -->
+	<node pkg="trajectory_mapper" name="mapper_ext$(arg camera)" type="trajectory_mapper_node" output="screen">
+		<remap from="/tf_msg" to="/tf_cam$(arg camera)" />
+		<!-- <remap from="/tf_msg" to="/camera_imu/vrpn_client/raw_transform" /> -->
+		<remap from="/path" to="/path_ext$(arg camera)" />
+
+	</node>
+
+	<!-- <node pkg="trajectory_mapper" name="mapper_ext1" type="trajectory_mapper_node" output="screen"> -->
+		<!-- <remap from="/tf_msg" to="/tf_cam1" /> -->
+		<!-- <remap from="/tf_msg" to="/camera_imu/vrpn_client/raw_transform" /> -->
+		<!-- <remap from="/path" to="/path_ext1" /> -->
+
+	<!-- </node> -->
+
+<!-- ROVIO -->
+	<node pkg="trajectory_mapper" name="mapper_vio$(arg camera)" type="trajectory_mapper_node" output="screen">
+		<remap from="/tf_msg" to="/rovio$(arg camera)/T_CW" />
+		<remap from="/path" to="/path_rovio$(arg camera)" />
+
+	</node>
+
+	<!-- <node pkg="trajectory_mapper" name="mapper_rovio1" type="trajectory_mapper_node" output="screen"> -->
+		<!-- <remap from="/tf_msg" to="/rovio/T_CW_cam1" /> -->
+		<!-- <remap from="/path" to="/path_rovio1" /> -->
+
+	<!-- </node> -->
+</launch>
