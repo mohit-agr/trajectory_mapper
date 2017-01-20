@@ -141,6 +141,13 @@ include_directories(
    ${catkin_LIBRARIES}
  )
 
+## Declare a C++ executable
+ add_executable(tf_cameras src/tf_cameras.cpp)
+# add_dependencies(tf_cameras ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ target_link_libraries(tf_cameras
+   ${catkin_LIBRARIES}
+ )
+
 #############
 ## Install ##
 #############

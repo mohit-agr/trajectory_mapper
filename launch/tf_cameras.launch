@@ -1,17 +1,15 @@
 <launch>
 
-	<arg name="camera" default="0"/>
-	<arg name="VI" default="0"/>
-	<arg name="from" default="world"/>
-	<arg name="to" default="camera0"/>
+	<!-- <arg name="camera" default="0"/> -->
+	<!-- <arg name="from" default="world"/> -->
+	<!-- <arg name="to" default="camera0"/> -->
 	<!-- <arg name="rovwld" default="world"/> -->
 
-	<node pkg="trajectory_mapper" name="tf_listener$(arg VI)" type="tf_listener" output="screen">
+	<node pkg="trajectory_mapper" name="tf_cameras" type="tf_cameras" output="screen">
+		<param name="from_frame" value="imu0"/>
+		<param name="to_frame" value="imu1"/>
 
-		<param name="from_frame" value="world"/>
-		<param name="to_frame" value="cam$(arg VI)_$(arg camera)"/>
-
-		<remap from="/rovio/T_CW" to="/rovio$(arg VI)/T_CW"/>
+		<!-- <remap from="/rovio/T_CW" to="/rovio$(arg camera)/T_CW"/> -->
 		<!-- <remap from="/tf_msg" to="/tf_cam0" /> -->
 		<!-- <remap from="/tf_msg" to="/camera_imu/vrpn_client/raw_transform" /> -->
 		<!-- <remap from="/path" to="/path_ext" /> -->
