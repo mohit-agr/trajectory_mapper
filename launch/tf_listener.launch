@@ -1,17 +1,18 @@
 <launch>
 
+	<arg name="UAV" default=""/>
 	<arg name="camera" default="0"/>
 	<arg name="VI" default="0"/>
 	<arg name="from" default="world"/>
 	<arg name="to" default="camera0"/>
 	<!-- <arg name="rovwld" default="world"/> -->
 
-	<node pkg="trajectory_mapper" name="tf_listener$(arg VI)" type="tf_listener" output="screen">
+	<node pkg="trajectory_mapper" name="tf_listener_$(arg UAV)" type="tf_listener" output="screen">
 
 		<param name="from_frame" value="world"/>
-		<param name="to_frame" value="cam$(arg VI)_$(arg camera)"/>
+		<param name="to_frame" value="/$(arg UAV)/cam$(arg camera)_0"/>
 
-		<remap from="/rovio/T_CW" to="/rovio$(arg VI)/T_CW"/>
+		<remap from="/rovio/T_CW" to="/$(arg UAV)/rovio/T_CW"/>
 		<!-- <remap from="/tf_msg" to="/tf_cam0" /> -->
 		<!-- <remap from="/tf_msg" to="/camera_imu/vrpn_client/raw_transform" /> -->
 		<!-- <remap from="/path" to="/path_ext" /> -->
