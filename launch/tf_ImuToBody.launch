@@ -1,0 +1,22 @@
+<launch>
+	<arg name="parent" default="cam3"/>
+	<arg name="mid" default="cam0"/>
+	<arg name="child" default="body"/>
+	<arg name="UAV" default="elster"/>
+	<arg name="camera" default="3"/>
+
+	<node pkg="trajectory_mapper" name="tf_$(arg child)_$(arg parent)" type="tf_ImuToBody" output="screen">
+
+		<param name="parent_frame" value="cam$(arg camera)"/>
+		<param name="mid1_frame" value="imu"/>
+		<param name="mid2_frame" value="$(arg mid)"/>
+		<param name="child_frame" value="$(arg child)"/>
+		<param name="uav_" value= "$(arg UAV)"/> 
+
+		<remap from="/tf_cam0" to="/$(arg UAV)/tf_cam$(arg camera)"/>
+		<remap from="/rovio/extrinsics0" to="/no_topic"/>
+
+		<rosparam file="$(find trajectory_mapper)/cfg/transform_$(arg UAV)_ImuBody.yaml"/> 
+
+	</node>
+</launch>

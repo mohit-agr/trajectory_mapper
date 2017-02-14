@@ -1,21 +1,15 @@
 <launch>
 
-	<arg name="from" default="world"/>
-	<arg name="to" default="camera0"/>
-	<!-- <arg name="rovwld" default="world"/> -->
+	<node pkg="trajectory_mapper" name="tf_br_global" type="tf_broadcaster" output="screen">
 
-	<node pkg="trajectory_mapper" name="tf_listener_body_$(arg from)" type="tf_listener" output="screen">
+		<param name="from_frame" value="world"/>
+		<param name="to_frame" value="origin"/>
 
-		<param name="from_frame" value="/$(arg from)"/>
-		<param name="to_frame" value="/$(arg to)"/>
-		<!-- <param name="to_frame" value="origin"/> -->
-
-		<remap from="/rovio/T_CW" to="/T_$(arg to)_$(arg from)"/>
-		<remap from="/pose" to="pose_$(arg to)_$(arg from)"/>
+		<remap from="/T_BC" to="/T_org_vicon"/>
 		<!-- <remap from="/tf_msg" to="/tf_cam0" /> -->
 		<!-- <remap from="/tf_msg" to="/camera_imu/vrpn_client/raw_transform" /> -->
 		<!-- <remap from="/path" to="/path_ext" /> -->
-		<!-- <rosparam file="$(find trajectory_mapper)/cfg/transform_$(arg to).yaml"/>  -->
+		<rosparam file="$(find trajectory_mapper)/cfg/transform_elster_origin_vicon.yaml"/> 
 
 	</node>
 
@@ -30,4 +24,3 @@
 	<!-- </node> -->
 
 </launch>
-1

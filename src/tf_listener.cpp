@@ -12,16 +12,19 @@ ros::init(argc, argv, "tf_listener");
 
     from_frame_ = "/world";
     to_frame_ = "/camera0";
-    
+
     nhp.param("from_frame", from_frame_, from_frame_);
     nhp.param("to_frame", to_frame_, to_frame_);
 
 	ros::Publisher tf_pub = nh.advertise<geometry_msgs::TransformStamped>("/rovio/T_CW", 10);
+	ros::Publisher pose_pub = nh.advertise<geometry_msgs::Transform>("/pose", 10);
 
 	tf::TransformListener Lnr_CW;
 
 	ros::Rate rate(10.0);
+    // tf::TransformBroadcaster br;
 
+	geometry_msgs::Transform pose;    
 	while(nh.ok()) {
 		tf::StampedTransform tf_CW;
 		try {
@@ -31,12 +34,13 @@ ros::init(argc, argv, "tf_listener");
 		    ros::Duration(1.0).sleep();
 		    continue;
 	    }
-	    // tf::StampedTransform T_CW = tf_CO * tf_OW;
-
 	    geometry_msgs::TransformStamped tf_msg;
 
 	    tf::transformStampedTFToMsg(tf_CW, tf_msg);
 	    tf_pub.publish(tf_msg);
+
+	    pose = tf_msg.transform;
+	    pose_pub.publish(pose);
 	    rate.sleep();
 	}
 	return 0;
